@@ -1,168 +1,126 @@
-import { Text, View, Image, TouchableOpacity, StyleSheet, ScrollView } from "react-native";
-import { Link } from "expo-router";
-import { SafeAreaView } from "react-native-safe-area-context";
-import images from "@/constants/images";
-import icons from "@/constants/icons";
-import LinearGradient from 'react-native-linear-gradient'
+import React, { useState } from 'react';
+import { Text, View, Image, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { Link } from 'expo-router';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import images from '@/constants/images';
+import icons from '@/constants/icons';
+import LinearGradient from 'react-native-linear-gradient';
 
 export default function Index() {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
   return (
     <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
-     <ScrollView contentContainerStyle={[styles.scrollViewContent, {paddingBottom: 90 }]} showsVerticalScrollIndicator={false}>
-      <View style={styles.innerContainer}>
-        <View style={styles.header}>
-          <View style={styles.profileSection}>
-            <Image source={images.profile} style={styles.profileImage} />
-            <View style={styles.statusSection}>
-              <View style={styles.streakButton}>
-                <Image source={icons.fire} style={styles.fireIcon} />
-                <Text style={styles.streakText}>0 days</Text>
+      <ScrollView contentContainerStyle={[styles.scrollViewContent, { paddingBottom: 90 }]} showsVerticalScrollIndicator={false}>
+        <View style={styles.innerContainer}>
+          <View style={styles.header}>
+            <View style={styles.profileSection}>
+              <Image source={images.profile} style={styles.profileImage} />
+              <View style={styles.statusSection}>
+                <View style={styles.streakButton}>
+                  <Image source={icons.fire} style={styles.fireIcon} />
+                  <Text style={styles.streakText}>0 days</Text>
+                </View>
               </View>
             </View>
-          </View>
             <TouchableOpacity style={styles.tokenBalButton}>
               <Text style={styles.tokenBal}>0.00</Text>
             </TouchableOpacity>
-        </View>
-      </View>
-
-      <View style={styles.stat}>
-        <View style={styles.circle}>
-
-          <View style={styles.stepStat}>
-            <Image source={icons.footstep} style={styles.footstepIcon}/>
-            <Text style={styles.statText}>Steps</Text>
-          </View>
-          
-          <View style={styles.stepContainer}>
-            <Text style={styles.steps}>0</Text>
-          </View>
-
-          <View style={styles.dailyGoals}>
-            <Text style={styles.goal}>Daily Goal: </Text>
-            <Text style={styles.stepGoals}>0</Text>
           </View>
         </View>
-      </View>
 
-      <View style={styles.fitness}>
-        <View style={styles.moveStat}>
-          <Image source={icons.clock}/>
-          <Text style={styles.moveText}>0</Text>
-          <Text style={styles.moveText}>Move min</Text>
-        </View>
-
-        <View style={styles.moveStat}>
-          <Image source={icons.caloriesFire}/>
-          <Text style={styles.moveText}>0</Text>
-          <Text style={styles.moveText}>Kcal</Text>
-        </View>
-
-        <View style={styles.moveStat}>
-          <Image source={icons.personWalking}/>
-          <Text style={styles.moveText}>0</Text>
-          <Text style={styles.moveText}>km</Text>
-        </View>
-      </View>
-
-      <View style={styles.innerContainer}>
-        <View style={styles.progressContainer}>
-          <View style={styles.profileSection}>
-            <Text style={styles.progressText} >Your Progress</Text> 
+        <View style={styles.stat}>
+          <View style={styles.circle}>
+            <View style={styles.stepStat}>
+              <Image source={icons.footstep} style={styles.footstepIcon} />
+              <Text style={styles.statText}>Steps</Text>
+            </View>
+            <View style={styles.stepContainer}>
+              <Text style={styles.steps}>0</Text>
+            </View>
+            <View style={styles.dailyGoals}>
+              <Text style={styles.goal}>Daily Goal: </Text>
+              <Text style={styles.stepGoals}>0</Text>
+            </View>
           </View>
+        </View>
 
-            <View style={styles.weeklyStat}>
+        <View style={styles.fitness}>
+          <View style={styles.moveStat}>
+            <Image source={icons.clock} />
+            <Text style={styles.moveText}>0</Text>
+            <Text style={styles.moveText}>Move min</Text>
+          </View>
+          <View style={styles.moveStat}>
+            <Image source={icons.caloriesFire} />
+            <Text style={styles.moveText}>0</Text>
+            <Text style={styles.moveText}>Kcal</Text>
+          </View>
+          <View style={styles.moveStat}>
+            <Image source={icons.personWalking} />
+            <Text style={styles.moveText}>0</Text>
+            <Text style={styles.moveText}>km</Text>
+          </View>
+        </View>
+
+        <View style={styles.innerContainer}>
+          <View style={styles.progressContainer}>
+            <View style={styles.profileSection}>
+              <Text style={styles.progressText}>Your Progress</Text>
+            </View>
+            <TouchableOpacity style={styles.weeklyStat} onPress={toggleDropdown}>
               <Text style={styles.weekStat}>This week</Text>
-              <Image source={icons.arrowdown}/>
+              <Image source={icons.arrowdown} />
+            </TouchableOpacity>
+          </View>
+
+          {isDropdownOpen && (
+            <View style={styles.statCircleContainer}>
+              {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day) => (
+                <View key={day} style={styles.circleContainer}>
+                  <View style={styles.weekCircle}></View>
+                  <Text>{day}</Text>
+                </View>
+              ))}
             </View>
+          )}
         </View>
 
-        <View style={styles.statCircleContainer}>
-          <View style= {styles.circleContainer}>
-            <View style={styles.weekCircle}>
-            </View>
-            <Text>Mon</Text>
-          </View>
-
-          <View style= {styles.circleContainer}>
-            <View style={styles.weekCircle}>
-            </View>
-            <Text>Tue</Text>
-          </View>
-
-          <View style= {styles.circleContainer}>
-            <View style={styles.weekCircle}>
-            </View>
-            <Text>Wed</Text>
-          </View>
-
-          <View style= {styles.circleContainer}>
-            <View style={styles.weekCircle}>
-            </View>
-            <Text>Thu</Text>
-          </View>
-
-          <View style= {styles.circleContainer}>
-            <View style={styles.weekCircle}>
-            </View>
-            <Text>Fri</Text>
-          </View>
-
-          <View style= {styles.circleContainer}>
-            <View style={styles.weekCircle}>
-            </View>
-            <Text>Sat</Text>
-          </View>
-
-          <View style= {styles.circleContainer}>
-            <View style={styles.weekCircle}>
-            </View>
-            <Text>Sun</Text>
-          </View>
-
+        <View style={styles.challenge}>
+          <Text style={styles.challengeHeader}>Check out Our Challenges.</Text>
+          <Text style={styles.challengeText}>Join Our challenge and progress to win rewards.</Text>
         </View>
-      </View>
 
-      <View style={styles.challenge}>
-        <Text style={styles.challengeHeader}>Check out Our Challenges.</Text>
-        <Text style={styles.challengeText}>Join Our challenge and progress to win rewards.</Text>
-      </View>
+        <View style={styles.reward}>
+          <View style={styles.referralBox}>
+            <Text style={styles.rewardAmount}>10</Text>
+            <Text style={styles.rewardText}>For each referral</Text>
+            <TouchableOpacity style={styles.rewardButton}>
+              <Text style={styles.rewardButtonText}>Get 10</Text>
+            </TouchableOpacity>
+          </View>
 
-    <View style={styles.reward}>
+          <View style={styles.referralBox1}>
+            <Text style={styles.rewardAmount}>5</Text>
+            <Text style={styles.rewardText}>Claim Daily rewards</Text>
+            <TouchableOpacity style={styles.rewardButton}>
+              <Text style={styles.rewardButtonText}>Claim</Text>
+            </TouchableOpacity>
+          </View>
 
-      <View style={styles.referralBox}>
-        <Text style={styles.rewardAmount}>10</Text>
-        <Text style={styles.rewardText}>For each referral</Text>
-        <TouchableOpacity style={styles.rewardButton}>
-          <Text style={styles.rewardButtonText}>
-            Get 10
-          </Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.referralBox1}>
-        <Text style={styles.rewardAmount}>5</Text>
-        <Text style={styles.rewardText}>Claim Daily rewards</Text>
-        <TouchableOpacity style={styles.rewardButton}>
-          <Text style={styles.rewardButtonText}>
-            Claim
-          </Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.referralBox2}>
-        <Text style={styles.rewardAmount}>2x</Text>
-        <Text style={styles.rewardText}>Walk2Wealth on Premium</Text>
-        <TouchableOpacity style={styles.rewardButton}>
-          <Text style={styles.rewardButtonText}>
-            Get
-          </Text>
-        </TouchableOpacity>
-      </View>
-
-    </View>
-
-    </ScrollView>
+          <View style={styles.referralBox2}>
+            <Text style={styles.rewardAmount}>2x</Text>
+            <Text style={styles.rewardText}>Walk2Wealth on Premium</Text>
+            <TouchableOpacity style={styles.rewardButton}>
+              <Text style={styles.rewardButtonText}>Get</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -218,7 +176,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#0A66BC',
     fontFamily: 'Rubik-Bold',
-    marginLeft: 5
+    marginLeft: 5,
   },
   tokenBalButton:{
     backgroundColor: '#0A66BC',
@@ -394,7 +352,7 @@ const styles = StyleSheet.create({
     fontFamily: '',
     color: 'white',
     fontWeight:'500',
-    fontSize: 16
+    fontSize: 14
   },
   rewardButton: {
     backgroundColor: 'white',
